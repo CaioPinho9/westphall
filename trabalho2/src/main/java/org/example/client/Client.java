@@ -1,12 +1,10 @@
 package org.example.client;
 
 import com.google.gson.Gson;
+
 import org.example.common.ApiModels.*;
 import org.example.common.CryptoUtils;
 
-import org.apache.commons.codec.binary.Base32;
-
-import java.io.*;
 import java.net.URLEncoder;
 import java.nio.file.*;
 import java.util.*;
@@ -15,7 +13,7 @@ public final class Client {
 	private static final Scanner in = new Scanner(System.in);
 	private static final Gson gson = new Gson();
 
-	public static void main(String[] args) throws Exception {
+	public static void main(String[] args) {
 		String base = System.getProperty("server", "http://localhost:8080");
 		Http http = new Http(base);
 		System.out.println("Cliente conectado a: " + base);
@@ -58,11 +56,6 @@ public final class Client {
 		Path out = Paths.get("qrcode-" + u + ".png");
 		Files.write(out, png);
 		System.out.println("QR salvo em: " + out.toAbsolutePath());
-
-		// Mostra segredo Base32 também (uso de commons-codec)
-		byte[] raw = new Base32().decode(r.secretBase32());
-		System.out.println("Secret(Base32)=" + r.secretBase32());
-		System.out.println("Secret(hex)=" + CryptoUtils.toHex(raw));
 	}
 
 	private static void loginTotp(Http http) throws Exception {

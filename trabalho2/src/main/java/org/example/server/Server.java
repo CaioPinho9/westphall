@@ -15,7 +15,8 @@ import java.util.*;
 public final class Server {
 	private static final Gson gson = new Gson();
 	private static final UserStore store = new UserStore(new File("server-db.json"));
-	private static final TotpService totp = new TotpService("INE5680-App");
+	public static final String TOTP_APP = "Totp-App";
+	private static final TotpService totp = new TotpService(TOTP_APP);
 	private static final Map<String, String> sessions = new HashMap<>(); // token -> username
 
 	public static void main(String[] args) throws Exception {
@@ -54,9 +55,9 @@ public final class Server {
 		store.put(u);
 
 		String otpauthUri = String.format("otpauth://totp/%s:%s?secret=%s&issuer=%s&digits=6&period=30",
-				"INE5680-App", req.username(), secret, "INE5680-App");
+				TOTP_APP, req.username(), secret, TOTP_APP);
 
-		RegisterResp resp = new RegisterResp("ok", "INE5680-App", req.username(), secret, otpauthUri, dataUri);
+		RegisterResp resp = new RegisterResp("ok", TOTP_APP, req.username(), secret, otpauthUri, dataUri);
 		send(ex, 200, gson.toJson(resp));
 	}
 
