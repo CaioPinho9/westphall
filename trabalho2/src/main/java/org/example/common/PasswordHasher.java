@@ -28,7 +28,7 @@ public final class PasswordHasher {
 		}
 	}
 
-	public static String hashForStorage(String username, String password, byte[] salt) {
+	public static String hashForStorage(String password, byte[] salt) {
 		byte[] dk = pbkdf2(password.toCharArray(), salt, DEFAULT_ITER, HASH_LEN);
 		return "pbkdf2$sha256$" + DEFAULT_ITER + "$" + Base64.getEncoder().encodeToString(salt) +
 				"$" + Base64.getEncoder().encodeToString(dk);

@@ -16,7 +16,7 @@ import java.util.Arrays;
 public final class CryptoUtils {
 	private static final SecureRandom RNG = new SecureRandom();
 	public static final int GCM_TAG_BITS = 128;
-	public static final int GCM_IV_LEN = 12; // recomendado para GCM
+	public static final int GCM_IV_LEN = 12;
 
 	public static byte[] scrypt(String password, byte[] salt, int N, int r, int p, int dkLen) {
 		return SCrypt.generate(password.getBytes(StandardCharsets.UTF_8), salt, N, r, p, dkLen);
@@ -68,15 +68,6 @@ public final class CryptoUtils {
 		} catch (Exception e) {
 			throw new RuntimeException("AES-GCM decrypt error", e);
 		}
-	}
-
-	// Auxiliares demonstrando uso de commons-codec (Base32 e Hex)
-	public static String toBase32(byte[] data) {
-		return new Base32().encodeToString(data);
-	}
-
-	public static byte[] fromBase32(String s) {
-		return new Base32().decode(s);
 	}
 
 	public static String toHex(byte[] data) {

@@ -39,7 +39,7 @@ public final class Server {
 			return;
 		}
 		byte[] salt = PasswordHasher.randomSalt();
-		String stored = PasswordHasher.hashForStorage(req.username(), req.password(), salt);
+		String stored = PasswordHasher.hashForStorage(req.password(), salt);
 
 		// Gera segredo TOTP (Base32)
 		String secret = totp.newSecret();
